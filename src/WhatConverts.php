@@ -5,7 +5,7 @@ use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Psr7\Response;
 use WhatConverts\Exception\WhatConvertsApiException;
 
-class WhatConverts
+class WhatConverts implements WhatConvertsInterface
 {
 
 	use AccountsResources;
