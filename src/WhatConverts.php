@@ -18,11 +18,10 @@ class WhatConverts
 	protected $wc_client;
 
 	/**
-		* WhatConverts constructor.
-		* Create an HTTP client with default request settings for WhatConverts
-		* @param string $wc_api_token
-		* @param string $wc_api_secret
-	*/
+	 * WhatConverts constructor.
+	 * @param $wc_api_token
+	 * @param $wc_api_secret
+     */
 	public function __construct($wc_api_token, $wc_api_secret)
 	{
 		$this->wc_api_token = $wc_api_token;
@@ -35,22 +34,23 @@ class WhatConverts
 				$this->wc_api_token,
 				$this->wc_api_secret
 			],
-			// disable throwing exceptions on an HTTP protocol errors (i.e., 4xx and 5xx responses)
+			// disable throwing exceptions on an HTTP protocol errors (i.e., 4xx and 5xx responses). Allows us to throw our own API exception when an error_message is encountered
 			'http_errors' => false
 		]);
 	}
 
 	/**
-		* Parse a Psr7 Response into JSON and throw a
-		* WhatConvertsApiException if an error_message given
-		* @param GuzzleHttp\Psr7\Response
-		* @throws WhatConverts\Exception\WhatConvertsApiException
-		* @return object
-	*/
+	 * Parse Psr7 Response into JSON
+	 * @param Response $response
+	 * @return mixed
+	 * @throws WhatConvertsApiException
+     */
 	protected function parseResponse(Response $response)
 	{
 		$result = json_decode(
-			$response->getBody()->getContents()
+			$response
+				->getBody()
+				->getContents()
 		);
 		if (isset($result->error_message))
 		{

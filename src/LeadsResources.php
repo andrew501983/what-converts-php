@@ -3,19 +3,19 @@ namespace WhatConverts;
 
 use GuzzleHttp\Exception\TransferException;
 use WhatConverts\Exception\WhatConvertsClientException;
+use WhatConverts\Exception\WhatConvertsApiException;
 
 trait LeadsResources
 {
 
-	/**
-		* Get paginated leads from WhatConverts
-		* @param array $options
-		* supported params: https://www.whatconverts.com/api/leads
-		* @throws WhatConverts\Exception\WhatConvertsClientException
-		* @throws WhatConverts\Exception\WhatConvertsApiException
-		* @return object
-	*/
-	public function getLeads(array $options = [])
+    /**
+     * Get paginated, filtered leads
+     * @param array $options
+     * @return mixed
+     * @throws WhatConvertsApiException
+     * @throws WhatConvertsClientException
+     */
+    public function getLeads(array $options = [])
 	{
 		try
 		{
@@ -31,21 +31,20 @@ trait LeadsResources
 		}
 	}
 
-	/**
-		* Get all leads from WhatConverts
-		* @param array $options
-		* supported params: https://www.whatconverts.com/api/leads
-		* @throws WhatConverts\Exception\WhatConvertsClientException
-		* @throws WhatConverts\Exception\WhatConvertsApiException
-		* @return array
-	*/
-	public function getAllLeads(array $options = [])
+    /**
+     * Get all leads, non-paginated
+     * @param array $options
+     * @return array
+     * @throws WhatConvertsApiException
+     * @throws WhatConvertsClientException
+     */
+    public function getAllLeads(array $options = [])
 	{
 		try
 		{
 			$accounts = [];
 			$pageNumber = 1; //first page is considered 1, not 0 indexed
-			$leadsPerPageDesired = 250; //250 is the max allowed or returned
+			$leadsPerPageDesired = 250; //250 is the max allowed
 			$params = [
 				'page_number' => $pageNumber,
 				'leads_per_page' => $leadsPerPageDesired
@@ -84,14 +83,14 @@ trait LeadsResources
 		}
 	}
 
-	/**
-		* Get a single lead from WhatConverts
-		* @param string $lead_id
-		* @throws WhatConverts\Exception\WhatConvertsClientException
-		* @throws WhatConverts\Exception\WhatConvertsApiException
-		* @return object
-	*/
-	public function getLead($lead_id)
+    /**
+     * Get detail for a single lead
+     * @param $lead_id
+     * @return mixed
+     * @throws WhatConvertsApiException
+     * @throws WhatConvertsClientException
+     */
+    public function getLead($lead_id)
 	{
 		try 
 		{
@@ -104,16 +103,16 @@ trait LeadsResources
 		}
 	}
 
-	/**
-		* Create a new lead in WhatConverts
-		* @param string $profile_id
-		* @param string $lead_type
-		* @param array $attributes
-		* @throws WhatConverts\Exception\WhatConvertsClientException
-		* @throws WhatConverts\Exception\WhatConvertsApiException
-		* @return object
-	*/
-	public function createLead($profile_id, $lead_type, array $attributes = [])
+    /**
+     * Create a new lead
+     * @param $profile_id
+     * @param $lead_type
+     * @param array $attributes
+     * @return mixed
+     * @throws WhatConvertsApiException
+     * @throws WhatConvertsClientException
+     */
+    public function createLead($profile_id, $lead_type, array $attributes = [])
 	{
 		try 
 		{
@@ -136,16 +135,15 @@ trait LeadsResources
 		}
 	}
 
-	/**
-		* Create lead details in WhatConverts
-		* @param string $lead_id
-		* @param array $attributes
-		* supported params: https://www.whatconverts.com/api/leads
-		* @throws WhatConverts\Exception\WhatConvertsClientException
-		* @throws WhatConverts\Exception\WhatConvertsApiException
-		* @return object
-	*/
-	public function editLead($lead_id, array $attributes = [])
+    /**
+     * Edit a lead
+     * @param $lead_id
+     * @param array $attributes
+     * @return mixed
+     * @throws WhatConvertsApiException
+     * @throws WhatConvertsClientException
+     */
+    public function editLead($lead_id, array $attributes = [])
 	{
 		try 
 		{

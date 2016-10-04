@@ -3,19 +3,19 @@ namespace WhatConverts;
 
 use GuzzleHttp\Exception\TransferException;
 use WhatConverts\Exception\WhatConvertsClientException;
+use WhatConverts\Exception\WhatConvertsApiException;
 
 trait AccountsResources
 {
 
-	/**
-		* Get paginated accounts from WhatConverts
-		* @param array $options
-		* supported params: https://www.whatconverts.com/api/accounts
-		* @throws WhatConverts\Exception\WhatConvertsClientException
-		* @throws WhatConverts\Exception\WhatConvertsApiException
-		* @return object
-	*/
-	public function getAccounts(array $options = [])
+    /**
+     * Get paginated, filtered accounts
+     * @param array $options
+     * @return mixed
+     * @throws WhatConvertsApiException
+     * @throws WhatConvertsClientException
+     */
+    public function getAccounts(array $options = [])
 	{
 		try
 		{
@@ -31,21 +31,20 @@ trait AccountsResources
 		}
 	}
 
-	/**
-		* Get all accounts from WhatConverts
-		* @param array $options
-		* supported params: https://www.whatconverts.com/api/accounts
-		* @throws WhatConverts\Exception\WhatConvertsClientException
-		* @throws WhatConverts\Exception\WhatConvertsApiException
-		* @return array
-	*/
-	public function getAllAccounts(array $options = [])
+    /**
+     * * Get full account list, non-paginated
+     * @param array $options
+     * @return array
+     * @throws WhatConvertsApiException
+     * @throws WhatConvertsClientException
+     */
+    public function getAllAccounts(array $options = [])
 	{
 		try
 		{
 			$accounts = [];
 			$pageNumber = 1; //first page is considered 1, not 0 indexed
-			$accountsPerPageDesired = 250; //250 is the max allowed or returned
+			$accountsPerPageDesired = 250; //250 is the max allowed
 			$params = [
 				'page_number' => $pageNumber,
 				'accounts_per_page' => $accountsPerPageDesired
@@ -84,14 +83,14 @@ trait AccountsResources
 		}
 	}
 
-	/**
-		* Get a single account from WhatConverts
-		* @param string $account_id
-		* @throws WhatConverts\Exception\WhatConvertsClientException
-		* @throws WhatConverts\Exception\WhatConvertsApiException
-		* @return object
-	*/
-	public function getAccount($account_id)
+    /**
+     * Get detail for a single account
+     * @param $account_id
+     * @return mixed
+     * @throws WhatConvertsApiException
+     * @throws WhatConvertsClientException
+     */
+    public function getAccount($account_id)
 	{
 		try 
 		{
@@ -104,14 +103,14 @@ trait AccountsResources
 		}
 	}
 
-	/**
-		* Create a new account in WhatConverts
-		* @param string $account_name
-		* @throws WhatConverts\Exception\WhatConvertsClientException
-		* @throws WhatConverts\Exception\WhatConvertsApiException
-		* @return object
-	*/
-	public function createAccount($account_name)
+    /**
+     * Create a new account resource
+     * @param $account_name
+     * @return mixed
+     * @throws WhatConvertsApiException
+     * @throws WhatConvertsClientException
+     */
+    public function createAccount($account_name)
 	{
 		try 
 		{
@@ -130,15 +129,15 @@ trait AccountsResources
 		}
 	}
 
-	/**
-		* Edit an account
-		* @param string $account_id
-		* @param string $account_name (only editable field in account resource)
-		* @throws WhatConverts\Exception\WhatConvertsClientException
-		* @throws WhatConverts\Exception\WhatConvertsApiException
-		* @return object
-	*/
-	public function editAccount($account_id, $account_name)
+    /**
+     * Edit an account
+     * @param $account_id
+     * @param $account_name
+     * @return mixed
+     * @throws WhatConvertsApiException
+     * @throws WhatConvertsClientException
+     */
+    public function editAccount($account_id, $account_name)
 	{
 		try 
 		{
@@ -156,14 +155,14 @@ trait AccountsResources
 		}
 	}
 
-	/**
-		* Delete an account from WhatConverts
-		* @param string $account_id
-		* @throws WhatConverts\Exception\WhatConvertsClientException
-		* @throws WhatConverts\Exception\WhatConvertsApiException
-		* @return object
-	*/
-	public function deleteAccount($account_id)
+    /**
+     * Delete an account
+     * @param $account_id
+     * @return mixed
+     * @throws WhatConvertsApiException
+     * @throws WhatConvertsClientException
+     */
+    public function deleteAccount($account_id)
 	{
 		try 
 		{

@@ -3,19 +3,19 @@ namespace WhatConverts;
 
 use GuzzleHttp\Exception\TransferException;
 use WhatConverts\Exception\WhatConvertsClientException;
+use WhatConverts\Exception\WhatConvertsApiException;
 
 trait ProfilesResources
 {
 
-	/**
-		* Get paginated profiles from WhatConverts
-		* @param array $options
-		* supported params: https://www.whatconverts.com/api/profiles
-		* @throws WhatConverts\Exception\WhatConvertsClientException
-		* @throws WhatConverts\Exception\WhatConvertsApiException
-		* @return object
-	*/
-	public function getProfiles(array $options = [])
+    /**
+     * Get paginated, filtered profiles
+     * @param array $options
+     * @return mixed
+     * @throws WhatConvertsApiException
+     * @throws WhatConvertsClientException
+     */
+    public function getProfiles(array $options = [])
 	{
 		try
 		{
@@ -31,21 +31,20 @@ trait ProfilesResources
 		}
 	}
 
-	/**
-		* Get all profiles from WhatConverts
-		* @param array $options
-		* supported params: https://www.whatconverts.com/api/profiles
-		* @throws WhatConverts\Exception\WhatConvertsClientException
-		* @throws WhatConverts\Exception\WhatConvertsApiException
-		* @return array
-	*/
-	public function getAllProfiles(array $options = [])
+    /**
+     * Get all profiles, non-paginated
+     * @param array $options
+     * @return array
+     * @throws WhatConvertsApiException
+     * @throws WhatConvertsClientException
+     */
+    public function getAllProfiles(array $options = [])
 	{
 		try
 		{
-			$accounts = [];
+			$profiles = [];
 			$pageNumber = 1; //first page is considered 1, not 0 indexed
-			$profilesPerPageDesired = 250; //250 is the max allowed or returned
+			$profilesPerPageDesired = 250; //250 is the max allowed
 			$params = [
 				'page_number' => $pageNumber,
 				'profiles_per_page' => $profilesPerPageDesired
@@ -59,7 +58,7 @@ trait ProfilesResources
 			]);
 			$result = $this->parseResponse($response);
 			$totalPages = $result->total_pages;
-			$accounts = $result->profiles;
+			$profiles = $result->profiles;
 			$pageNumber++; //reflect that we pulled the first page already
 			while($pageNumber <= $totalPages)
 			{
@@ -84,15 +83,15 @@ trait ProfilesResources
 		}
 	}
 
-	/**
-		* Get a single account profile
-		* @param string $account_id
-		* @param string $profile_id
-		* @throws WhatConverts\Exception\WhatConvertsClientException
-		* @throws WhatConverts\Exception\WhatConvertsApiException
-		* @return object
-	*/
-	public function getProfile($account_id, $profile_id)
+    /**
+     * Get detail for a single account profile
+     * @param $account_id
+     * @param $profile_id
+     * @return mixed
+     * @throws WhatConvertsApiException
+     * @throws WhatConvertsClientException
+     */
+    public function getProfile($account_id, $profile_id)
 	{
 		try 
 		{
@@ -105,15 +104,15 @@ trait ProfilesResources
 		}
 	}
 
-	/**
-		* Create a new profile under an account
-		* @param string $account_id
-		* @param string $profile_name
-		* @throws WhatConverts\Exception\WhatConvertsClientException
-		* @throws WhatConverts\Exception\WhatConvertsApiException
-		* @return object
-	*/
-	public function createProfile($account_id, $profile_name)
+    /**
+     * Create a new account profile
+     * @param $account_id
+     * @param $profile_name
+     * @return mixed
+     * @throws WhatConvertsApiException
+     * @throws WhatConvertsClientException
+     */
+    public function createProfile($account_id, $profile_name)
 	{
 		try 
 		{
@@ -131,15 +130,17 @@ trait ProfilesResources
 		}
 	}
 
-	/**
-		* Edit details for a single profile
-		* @param string $account_id
-		* @param string $profile_name (only editable field in profile resource)
-		* @throws WhatConverts\Exception\WhatConvertsClientException
-		* @throws WhatConverts\Exception\WhatConvertsApiException
-		* @return object
-	*/
-	public function editProfile($account_id, $profile_id, $profile_name)
+
+    /**
+     * Edit a profile
+     * @param $account_id
+     * @param $profile_id
+     * @param $profile_name
+     * @return mixed
+     * @throws WhatConvertsApiException
+     * @throws WhatConvertsClientException
+     */
+    public function editProfile($account_id, $profile_id, $profile_name)
 	{
 		try 
 		{
@@ -157,16 +158,15 @@ trait ProfilesResources
 		}
 	}
 
-	/**
-		* Delete a single profile. This will delete all numbers, leads, and
-		* other settings associated with the profile.
-		* @param string $account_id
-		* @param string $profile_id
-		* @throws WhatConverts\Exception\WhatConvertsClientException
-		* @throws WhatConverts\Exception\WhatConvertsApiException
-		* @return object
-	*/
-	public function deleteProfile($account_id, $profile_id)
+    /**
+     * Delete an account profile
+     * @param $account_id
+     * @param $profile_id
+     * @return mixed
+     * @throws WhatConvertsApiException
+     * @throws WhatConvertsClientException
+     */
+    public function deleteProfile($account_id, $profile_id)
 	{
 		try
 		{
