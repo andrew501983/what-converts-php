@@ -43,8 +43,8 @@ trait AccountsResources
 		try
 		{
 			$accounts = [];
-			$pageNumber = 1; //first page is considered 1, not 0 indexed
-			$accountsPerPageDesired = 250; //250 is the max allowed
+			$pageNumber = 1; //not 0 indexed
+			$accountsPerPageDesired = 250; //max allowed = 250
 			$params = [
 				'page_number' => $pageNumber,
 				'accounts_per_page' => $accountsPerPageDesired
@@ -59,7 +59,7 @@ trait AccountsResources
 			$result = $this->parseResponse($response);
 			$totalPages = $result->total_pages;
 			$accounts = $result->accounts;
-			$pageNumber++; //reflect that we pulled the first page already
+			$pageNumber++;
 			while($pageNumber <= $totalPages)
 			{
 				$params = [
@@ -106,17 +106,18 @@ trait AccountsResources
     /**
      * Create a new account resource
      * @param $account_name
+     * @param bool $create_profile
      * @return mixed
      * @throws WhatConvertsApiException
      * @throws WhatConvertsClientException
      */
-    public function createAccount($account_name)
+    public function createAccount($account_name, $create_profile = true)
 	{
 		try 
 		{
 			$params = [
 				'account_name' => $account_name,
-				'create_profile' => "true"
+				'create_profile' => ($create_profile ? "true" : "false")
 			];
 			$response = $this->wc_client->post("accounts", [
 				'form_params' => $params

@@ -42,9 +42,9 @@ trait LeadsResources
 	{
 		try
 		{
-			$accounts = [];
-			$pageNumber = 1; //first page is considered 1, not 0 indexed
-			$leadsPerPageDesired = 250; //250 is the max allowed
+			$leads = [];
+			$pageNumber = 1; //not 0 indexed
+			$leadsPerPageDesired = 250; //max = 250
 			$params = [
 				'page_number' => $pageNumber,
 				'leads_per_page' => $leadsPerPageDesired
@@ -58,8 +58,8 @@ trait LeadsResources
 			]);
 			$result = $this->parseResponse($response);
 			$totalPages = $result->total_pages;
-			$accounts = $result->leads;
-			$pageNumber++; //reflect that we pulled the first page already
+			$leads = $result->leads;
+			$pageNumber++;
 			while($pageNumber <= $totalPages)
 			{
 				$params = [
