@@ -117,7 +117,7 @@ trait AccountsResources
 		{
 			$params = [
 				'account_name' => $account_name,
-				'create_profile' => ($create_profile ? "true" : "false")
+				'create_profile' => $create_profile ? "true" : "false"
 			];
 			$response = $this->wc_client->post("accounts", [
 				'form_params' => $params
