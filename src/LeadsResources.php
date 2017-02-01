@@ -20,14 +20,21 @@ trait LeadsResources
 		try
 		{
 			$params = $options;
-			$response = $this->wc_client->get("leads", [
-				'query' => http_build_query($params)
-			]);
+			$response = $this->wc_client->get(
+				"leads",
+				[
+					'query' => http_build_query($params)
+				]
+			);
 			return $result = $this->parseResponse($response);
 		}
 		catch (TransferException $e)
 		{
-			throw new WhatConvertsClientException($e->getMessage(), $e->getCode(), $e);
+			throw new WhatConvertsClientException(
+				$e->getMessage(),
+				$e->getCode(),
+				$e
+			);
 		}
 	}
 
@@ -53,9 +60,12 @@ trait LeadsResources
 			unset($options['page_number']);
 			unset($options['leads_per_page']);
 			$params += $options;
-			$response = $this->wc_client->get("leads", [
-				'query' => http_build_query($params)
-			]);
+			$response = $this->wc_client->get(
+				"leads",
+				[
+					'query' => http_build_query($params)
+				]
+			);
 			$result = $this->parseResponse($response);
 			$totalPages = $result->total_pages;
 			$leads = $result->leads;
@@ -67,9 +77,12 @@ trait LeadsResources
 					'leads_per_page' => $leadsPerPageDesired
 				];
 				$params += $options;
-				$response = $this->wc_client->get("leads", [
-					'query' => http_build_query($params)
-				]);
+				$response = $this->wc_client->get(
+					"leads", 
+					[
+						'query' => http_build_query($params)
+					]
+				);
 				$result = $this->parseResponse($response);
 				//operator overloading (merge arrays, preserve keys)
 				$leads = array_merge($leads, $result->leads);
@@ -79,7 +92,11 @@ trait LeadsResources
 		}
 		catch (TransferException $e)
 		{
-			throw new WhatConvertsClientException($e->getMessage(), $e->getCode(), $e);
+			throw new WhatConvertsClientException(
+				$e->getMessage(),
+				$e->getCode(),
+				$e
+			);
 		}
 	}
 
@@ -99,7 +116,11 @@ trait LeadsResources
 		} 
 		catch (TransferException $e)
 		{
-			throw new WhatConvertsClientException($e->getMessage(), $e->getCode(), $e);
+			throw new WhatConvertsClientException(
+				$e->getMessage(),
+				$e->getCode(),
+				$e
+			);
 		}
 	}
 
@@ -123,15 +144,22 @@ trait LeadsResources
 			// merge in $attributes array to $params
 			unset($attributes['profile_id']);
 			unset($attributes['lead_type']);
-			$params += (array)$attributes;
-			$response = $this->wc_client->post("leads", [
-				'form_params' => $params
-			]);
+			$params += $attributes;
+			$response = $this->wc_client->post(
+				"leads", 
+				[
+					'form_params' => $params
+				]
+			);
 			return $result = $this->parseResponse($response);
 		}
 		catch (TransferException $e)
 		{
-			throw new WhatConvertsClientException($e->getMessage(), $e->getCode(), $e);
+			throw new WhatConvertsClientException(
+				$e->getMessage(),
+				$e->getCode(),
+				$e
+			);
 		}
 	}
 
@@ -147,15 +175,22 @@ trait LeadsResources
 	{
 		try 
 		{
-			$params = (array)$attributes;
-			$response = $this->wc_client->post("leads/$lead_id", [
-				'form_params' => $params
-			]);
+			$params = $attributes;
+			$response = $this->wc_client->post(
+				"leads/$lead_id",
+				[
+					'form_params' => $params
+				]
+			);
 			return $result = $this->parseResponse($response);
 		}
 		catch (TransferException $e)
 		{
-			throw new WhatConvertsClientException($e->getMessage(), $e->getCode(), $e);
+			throw new WhatConvertsClientException(
+				$e->getMessage(),
+				$e->getCode(),
+				$e
+			);
 		}
 	}
 

@@ -27,7 +27,11 @@ trait AccountsResources
 		}
 		catch (TransferException $e)
 		{
-			throw new WhatConvertsClientException($e->getMessage(), $e->getCode(), $e);
+			throw new WhatConvertsClientException(
+				$e->getMessage(),
+				$e->getCode(),
+				$e
+			);
 		}
 	}
 
@@ -79,7 +83,11 @@ trait AccountsResources
 		}
 		catch (TransferException $e)
 		{
-			throw new WhatConvertsClientException($e->getMessage(), $e->getCode(), $e);
+			throw new WhatConvertsClientException(
+				$e->getMessage(),
+				$e->getCode(),
+				$e
+			);
 		}
 	}
 
@@ -99,7 +107,11 @@ trait AccountsResources
 		}
 		catch (TransferException $e) 
 		{
-			throw new WhatConvertsClientException($e->getMessage(), $e->getCode(), $e);
+			throw new WhatConvertsClientException(
+				$e->getMessage(),
+				$e->getCode(),
+				$e
+			);
 		}
 	}
 
@@ -126,7 +138,11 @@ trait AccountsResources
 		}
 		catch (TransferException $e)
 		{
-			throw new WhatConvertsClientException($e->getMessage(), $e->getCode(), $e);
+			throw new WhatConvertsClientException(
+				$e->getMessage(),
+				$e->getCode(),
+				$e
+			);
 		}
 	}
 
@@ -152,7 +168,11 @@ trait AccountsResources
 		}
 		catch (TransferException $e)
 		{
-			throw new WhatConvertsClientException($e->getMessage(), $e->getCode(), $e);
+			throw new WhatConvertsClientException(
+				$e->getMessage(),
+				$e->getCode(),
+				$e
+			);
 		}
 	}
 
@@ -172,7 +192,11 @@ trait AccountsResources
 		}
 		catch (TransferException $e)
 		{
-			throw new WhatConvertsClientException($e->getMessage(), $e->getCode(), $e);
+			throw new WhatConvertsClientException(
+				$e->getMessage(),
+				$e->getCode(),
+				$e
+			);
 		}
 	}
 	

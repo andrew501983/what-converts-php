@@ -21,14 +21,21 @@ trait ProfilesResources
 		try
 		{
 			$params = $options;
-			$response = $this->wc_client->get("accounts/$account_id/profiles", [
-				'query' => http_build_query($params)
-			]);
+			$response = $this->wc_client->get(
+				"accounts/$account_id/profiles", 
+				[
+					'query' => http_build_query($params)
+				]
+			);
 			return $result = $this->parseResponse($response);
 		}
 		catch (TransferException $e)
 		{
-			throw new WhatConvertsClientException($e->getMessage(), $e->getCode(), $e);
+			throw new WhatConvertsClientException(
+				$e->getMessage(),
+				$e->getCode(),
+				$e
+			);
 		}
 	}
 
@@ -54,9 +61,12 @@ trait ProfilesResources
 			unset($options['page_number']);
 			unset($options['profiles_per_page']);
 			$params += $options;
-			$response = $this->wc_client->get("accounts/$account_id/profiles", [
-				'query' => http_build_query($params)
-			]);
+			$response = $this->wc_client->get(
+				"accounts/$account_id/profiles",
+				[
+					'query' => http_build_query($params)
+				]
+			);
 			$result = $this->parseResponse($response);
 			$totalPages = $result->total_pages;
 			$profiles = $result->profiles;
@@ -68,9 +78,12 @@ trait ProfilesResources
 					'profiles_per_page' => $profilesPerPageDesired
 				];
 				$params += $options;
-				$response = $this->wc_client->get("accounts/$account_id/profiles", [
-					'query' => http_build_query($params)
-				]);
+				$response = $this->wc_client->get(
+					"accounts/$account_id/profiles",
+					[
+						'query' => http_build_query($params)
+					]
+				);
 				$result = $this->parseResponse($response);
 				//operator overloading (merge arrays, preserve keys)
 				$profiles = array_merge($profiles, $result->profiles);
@@ -80,7 +93,11 @@ trait ProfilesResources
         }
         catch (TransferException $e)
 		{
-            throw new WhatConvertsClientException($e->getMessage(), $e->getCode(), $e);
+            throw new WhatConvertsClientException(
+            	$e->getMessage(),
+            	$e->getCode(),
+            	$e
+            );
         }
 	}
 
@@ -101,7 +118,11 @@ trait ProfilesResources
 		} 
 		catch (TransferException $e)
 		{
-			throw new WhatConvertsClientException($e->getMessage(), $e->getCode(), $e);
+			throw new WhatConvertsClientException(
+				$e->getMessage(),
+				$e->getCode(),
+				$e
+			);
 		}
 	}
 
@@ -120,17 +141,23 @@ trait ProfilesResources
 			$params = [
 				'profile_name' => $profile_name
 			];
-			$response = $this->wc_client->post("accounts/$account_id/profiles", [
-				'form_params' => $params
-			]);
+			$response = $this->wc_client->post(
+				"accounts/$account_id/profiles",
+				[
+					'form_params' => $params
+				]
+			);
 			return $result = $this->parseResponse($response);
 		}
 		catch (TransferException $e)
 		{
-			throw new WhatConvertsClientException($e->getMessage(), $e->getCode(), $e);
+			throw new WhatConvertsClientException(
+				$e->getMessage(),
+				$e->getCode(),
+				$e
+			);
 		}
 	}
-
 
     /**
      * Edit a profile
@@ -148,14 +175,21 @@ trait ProfilesResources
 			$params = [
 				'profile_name' => $profile_name
 			];
-			$response = $this->wc_client->post("accounts/$account_id/profiles/$profile_id", [
-				'form_params' => $params
-			]);
+			$response = $this->wc_client->post(
+				"accounts/$account_id/profiles/$profile_id",
+				[
+					'form_params' => $params
+				]
+			);
 			return $result = $this->parseResponse($response);
 		}
 		catch (TransferException $e)
 		{
-			throw new WhatConvertsClientException($e->getMessage(), $e->getCode(), $e);
+			throw new WhatConvertsClientException(
+				$e->getMessage(),
+				$e->getCode(),
+				$e
+			);
 		}
 	}
 
@@ -176,7 +210,11 @@ trait ProfilesResources
 		}
 		catch (TransferException $e)
 		{
-			throw new WhatConvertsClientException($e->getMessage(), $e->getCode(), $e);
+			throw new WhatConvertsClientException(
+				$e->getMessage(),
+				$e->getCode(),
+				$e
+			);
 		}
 	}
 	

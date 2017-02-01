@@ -54,7 +54,10 @@ class WhatConverts implements WhatConvertsInterface
 		);
 		if (isset($result->error_message))
 		{
-			throw new WhatConvertsApiException($result->error_message, $response->getStatusCode());
+			throw new WhatConvertsApiException(
+				$result->error_message,
+				$response->getStatusCode()
+			);
 		}
 		return $result;
 	}
