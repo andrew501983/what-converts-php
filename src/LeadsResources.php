@@ -56,7 +56,8 @@ trait LeadsResources
 				'page_number' => $pageNumber,
 				'leads_per_page' => $leadsPerPageDesired
 			];
-			// merge in $options array to $params
+			// merge in $options array to $params. if page_number and leads_per_page
+			// specified by the user, do not use them. This method returns a full lead list!
 			unset($options['page_number']);
 			unset($options['leads_per_page']);
 			$params += $options;
@@ -84,7 +85,6 @@ trait LeadsResources
 					]
 				);
 				$result = $this->parseResponse($response);
-				//operator overloading (merge arrays, preserve keys)
 				$leads = array_merge($leads, $result->leads);
 				$pageNumber++;
 			}
@@ -113,7 +113,7 @@ trait LeadsResources
 		{
 			$response = $this->wc_client->get("leads/$lead_id");
 			return $result = $this->parseResponse($response)->leads[0];
-		} 
+		}
 		catch (TransferException $e)
 		{
 			throw new WhatConvertsClientException(

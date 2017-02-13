@@ -57,7 +57,8 @@ trait ProfilesResources
 				'page_number' => $pageNumber,
 				'profiles_per_page' => $profilesPerPageDesired
 			];
-			// merge in $options array to $params
+			// merge in $options array to $params. if page_number and profiles_per_page
+			// specified by the user, do not use them. This method returns a full profiles list!
 			unset($options['page_number']);
 			unset($options['profiles_per_page']);
 			$params += $options;
@@ -85,7 +86,6 @@ trait ProfilesResources
 					]
 				);
 				$result = $this->parseResponse($response);
-				//operator overloading (merge arrays, preserve keys)
 				$profiles = array_merge($profiles, $result->profiles);
 				$pageNumber++;
 			}

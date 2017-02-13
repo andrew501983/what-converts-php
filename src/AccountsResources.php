@@ -36,7 +36,7 @@ trait AccountsResources
 	}
 
     /**
-     * * Get full account list, non-paginated
+     * * Get a full account list, non-paginated
      * @param array $options
      * @return array
      * @throws WhatConvertsApiException
@@ -53,7 +53,8 @@ trait AccountsResources
 				'page_number' => $pageNumber,
 				'accounts_per_page' => $accountsPerPageDesired
 			];
-			// merge in $options array to $params
+			// merge in $options array to $params. if page_number and accounts_per_page
+			// specified by the user, do not use them. This method returns a full account list!
 			unset($options['page_number']);
 			unset($options['accounts_per_page']);
 			$params += $options;
@@ -75,7 +76,6 @@ trait AccountsResources
 					'query' => http_build_query($params)
 				]);
 				$result = $this->parseResponse($response);
-				//operator overloading (merge arrays, preserve keys)
 				$accounts = array_merge($accounts, $result->accounts);
 				$pageNumber++;
 			}

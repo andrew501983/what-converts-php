@@ -1,8 +1,10 @@
 <?php
 namespace WhatConverts;
 
-use GuzzleHttp\Client as HttpClient;
+use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Handler\CurlHandler;
 use WhatConverts\Exception\WhatConvertsApiException;
 
 class WhatConverts implements WhatConvertsInterface
@@ -21,22 +23,22 @@ class WhatConverts implements WhatConvertsInterface
 	 * WhatConverts constructor.
 	 * @param $wc_api_token
 	 * @param $wc_api_secret
-     */
-	public function __construct($wc_api_token, $wc_api_secret)
+	 * @param $handler GuzzleHttp\HandlerStack null
+    */
+	public function __construct($wc_api_token, $wc_api_secret, $handler = null)
 	{
 		$this->wc_api_token = $wc_api_token;
 		$this->wc_api_secret = $wc_api_secret;
-		$this->wc_client = new HttpClient([
-			// Base URI is used with relative requests
+		$this->wc_client = new Client([
 			'base_uri' => static::WC_BASE_ENDPOINT,
-			// HTTP Basic Auth
 			'auth' => [
 				$this->wc_api_token,
 				$this->wc_api_secret
 			],
-			// disable throwing exceptions on an HTTP protocol errors (i.e., 4xx and 5xx responses). Allows us to throw our own API exception when an error_message is encountered
-			'http_errors' => false
+			'http_errors' => false,
+			'handler' => $handler ?? HandlerStack::create(new CurlHandler)
 		]);
+
 	}
 
 	/**
@@ -44,7 +46,7 @@ class WhatConverts implements WhatConvertsInterface
 	 * @param Response $response
 	 * @return mixed
 	 * @throws WhatConvertsApiException
-     */
+        */
 	protected function parseResponse(Response $response)
 	{
 		$result = json_decode(
