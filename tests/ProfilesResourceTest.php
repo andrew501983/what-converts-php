@@ -84,7 +84,7 @@ class ProfilesResourceTest extends TestCase
 	public function it_updates_a_profile()
 	{
 		$mock = new MockHandler([
-		    new Response(200, ['X-Foo' => 'Bar'], file_get_contents(__DIR__ . '/fixtures/update_profile.json'))
+		    new Response(200, ['X-Foo' => 'Bar'], file_get_contents(__DIR__ . '/fixtures/update_profile.json')),
 		]);
 		$handler = HandlerStack::create($mock);
 		$client = new WhatConverts(
