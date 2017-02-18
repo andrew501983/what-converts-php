@@ -24,7 +24,7 @@ class WhatConverts implements WhatConvertsInterface
 	 * @param $wc_api_token
 	 * @param $wc_api_secret
 	 * @param $handler GuzzleHttp\HandlerStack null
-    */
+	*/
 	public function __construct($wc_api_token, $wc_api_secret, $handler = null)
 	{
 		$this->wc_api_token = $wc_api_token;
@@ -36,7 +36,7 @@ class WhatConverts implements WhatConvertsInterface
 				$this->wc_api_secret
 			],
 			'http_errors' => false,
-			'handler' => $handler ?? HandlerStack::create(new CurlHandler)
+			'handler' => $handler == null ? HandlerStack::create() : $handler
 		]);
 
 	}
@@ -46,7 +46,7 @@ class WhatConverts implements WhatConvertsInterface
 	 * @param Response $response
 	 * @return mixed
 	 * @throws WhatConvertsApiException
-        */
+    */
 	protected function parseResponse(Response $response)
 	{
 		$result = json_decode(
