@@ -36,7 +36,7 @@ class WhatConverts implements WhatConvertsInterface
 				$this->wc_api_secret
 			],
 			'http_errors' => false,
-			'handler' => ($handler == null ? HandlerStack::create() : $handler)
+			'handler' => $handler == null ? HandlerStack::create() : $handler
 		]);
 
 	}
