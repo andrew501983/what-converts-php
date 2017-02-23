@@ -4,7 +4,6 @@ namespace WhatConverts;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Handler\CurlHandler;
 use WhatConverts\Exception\WhatConvertsApiException;
 
 class WhatConverts implements WhatConvertsInterface
